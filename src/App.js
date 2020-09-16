@@ -1,6 +1,7 @@
 import React from 'react';
 import Filter from './components/Filter';
 import Products from './components/Products';
+import Cart from './components/Cart';
 import data from './data.json';
 
 class App extends React.Component {
@@ -8,10 +9,34 @@ class App extends React.Component {
         super();
         this.state = {
             products: data.products,
+            cartItems: [],
             size: "",
             sort: ""
         };
     }
+
+    removeFromCart = (product) => {
+        const cartItems = this.state.cartItems.slice();
+        this.setState({
+            cartItems: cartItems.filter((x) => x._id !== product._id)
+        });
+    }
+
+    addToCart = (product) => {
+        const cartItems = this.state.cartItems.slice();
+        let alreadyInCart = false;
+        cartItems.forEach((item) => {
+            if (item._id === product._id) {
+                item.count++;
+                alreadyInCart = true;
+            }
+        });
+        if (!alreadyInCart) {
+            cartItems.push({ ...product, count: 1 });
+        }
+        this.setState({cartItems});
+    };
+
     sortProducts = (event) => {
         const sort = event.target.value;
         this.setState((state) =>({
@@ -61,10 +86,16 @@ class App extends React.Component {
                             sortProducts={this.sortProducts}
                         >
                         </Filter>
-                        <Products products={this.state.products}></Products>
+                        <Products 
+                            products={this.state.products}
+                            addToCart={this.addToCart}
+                        ></Products>
                     </div>
                     <div className="sidebar">
-                        Cart items
+                        <Cart 
+                            cartItems={this.state.cartItems} 
+                            removeFromCart={this.removeFromCart}
+                        />
                     </div>
                 </main>
                 <footer>All rigth reserved.</footer>
