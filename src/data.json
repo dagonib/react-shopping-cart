@@ -1,6 +1,6 @@
 {
     "products":[
-        {
+          {
             "_id": "dress1",
             "image": "/images/dress1.jpg",
             "title": "Midi sundress with shirring detail",
