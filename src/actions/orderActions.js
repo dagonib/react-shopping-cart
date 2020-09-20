@@ -18,4 +18,4 @@ export const createOrder = (order) => (dispatch) => {
 
 export const clearOrder = () => (dispatch) => {
     dispatch({ type: CLEAR_ORDER });
-}
+};
