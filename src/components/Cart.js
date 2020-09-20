@@ -3,6 +3,7 @@ import formatCurrency from '../util';
 import Fade from 'react-reveal/Fade';
 import { connect } from 'react-redux';
 import { removeFromCart } from '../actions/cartActions';
+import { createOrder, clearOrder } from '../actions/orderActions';
 
 class Cart extends Component {
     constructor(props) {
@@ -137,8 +138,14 @@ class Cart extends Component {
     }
 }
 
-export default connect((state) => ({
-    cartItems: state.cart.cartItems
-}),
-    { removeFromCart } 
+export default connect(
+    (state) => ({
+        order: state.order.order,
+        cartItems: state.cart.cartItems
+    }),
+    { 
+        removeFromCart,
+        createOrder,
+        clearOrder
+    } 
 )(Cart);
